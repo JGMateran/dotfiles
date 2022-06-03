@@ -1,20 +1,19 @@
 syntax on
 
+set encoding=UTF-8
 set mouse=a
+set clipboard+=unnamedplus
+set updatetime=300
 
-" Indent setup
 set autoindent
 set smartindent
-set cindent
-set smartindent
-set tabstop=2
-set expandtab
 set shiftwidth=2
+set tabstop=2
+set cindent
 
+set expandtab
 set nocompatible
 
-set clipboard+=unnamedplus
-set encoding=UTF-8
 set number
 set rnu
 set nowrap
@@ -29,6 +28,9 @@ set noswapfile
 
 set completeopt=menu,menuone,noselect
 
+set background=dark
+set t_Co=256
+
 let mapleader = " "
 
 filetype indent on
@@ -37,7 +39,6 @@ filetype plugin indent on
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -50,61 +51,24 @@ Plug 'sheerun/vim-polyglot'
 Plug 'github/copilot.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'andrewradev/tagalong.vim'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'Yggdroot/indentLine'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'TimUntersberger/neogit'
 Plug 'sindrets/diffview.nvim'
 " Plug 'editorconfig/editorconfig-vim'
 
-" Plug 'vim-airline/vim-airline'
 Plug 'nvim-lualine/lualine.nvim'
-
 Plug 'numToStr/Comment.nvim'
-" Plug 'karb94/neoscroll.nvim'
 Plug 'max397574/better-escape.nvim'
 
-" Plug 'yardnsm/vim-import-cost', { 'do': 'npm install --production' }
-" Plug 'lukas-reineke/indent-blankline.nvim'
-" Plug 'jiangmiao/auto-pairs'
-" Plug 'tpope/vim-commentary'
-
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-
-" Plug 'terryma/vim-multiple-cursors'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-" Plug 'lewis6991/gitsigns.nvim'
-
-" Plug 'ellisonleao/carbon-now.nvim'
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'joshdick/onedark.vim'
-" Plug 'navarasu/onedark.nvim'
-
 Plug 'windwp/nvim-autopairs'
 Plug 'windwp/nvim-ts-autotag'
-
-" Plug 'akinsho/toggleterm.nvim'
-
-" Experiment
-" Plug 'williamboman/nvim-lsp-installer'
-" Plug 'neovim/nvim-lspconfig'
-" Plug 'glepnir/lspsaga.nvim'
-"
-" Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'hrsh7th/nvim-cmp'
-"
-" Plug 'L3MON4D3/LuaSnip'
-" Plug 'saadparwaiz1/cmp_luasnip'
-"
-" Plug 'onsails/lspkind-nvim'
-
-" Plug 'lukas-reineke/indent-blankline.nvim'
 
 " New plugins
 Plug 'lewis6991/gitsigns.nvim'
@@ -114,9 +78,13 @@ Plug 'pantharshit00/vim-prisma'
 " Themes
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'olimorris/onedarkpro.nvim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+
+Plug 'karb94/neoscroll.nvim'
 
 " Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'karb94/neoscroll.nvim'
+" Plug 'akinsho/toggleterm.nvim'
+" Plug 'yardnsm/vim-import-cost', { 'do': 'npm install --production' }
 
 call plug#end()
 
@@ -125,37 +93,23 @@ lua << EOF
 require('gitsigns').setup()
 require('neoscroll').setup()
 
-require('nvim-autopairs').setup({})
-require('nvim-ts-autotag').setup({})
+require('nvim-autopairs').setup()
+require('nvim-ts-autotag').setup()
 
 require('Comment').setup()
--- require('neoscroll').setup()
 require('better_escape').setup()
 
 EOF
 
-" let g:material_theme_style = 'ocean-community'
-" let g:material_terminal_italics = 1
-" let g:airline_theme = 'material'
-
 let g:tokyonight_style = "night"
 let g:tokyonight_italic_functions = 1
 let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+
 colorscheme tokyonight
 
 " Vim Script
 " let g:catppuccin_flavour = "macchiato" " latte, frappe, macchiato, mocha
 " colorscheme catppuccin
-
-lua << EOF
-
--- local onedarkpro = require("onedarkpro")
--- onedarkpro.setup({
---   theme = "onedark_vivid"
--- })
--- onedarkpro.load()
-
-EOF
 
 nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
@@ -175,8 +129,6 @@ nnoremap <leader>gs <cmd>lua require('telescope.builtin').git_stash()<cr>
 
 nmap ss :split<Return><C-w>w
 nmap sv :vsplit<Return><C-w>w
-" nmap ss :split<cr>
-" nmap sv :vsplit<cr>
 
 " Select all
 nmap <C-a> gg<S-v>G
@@ -186,9 +138,6 @@ nnoremap <leader>gc :Neogit commit<cr>
 
 " Converts the line to lowercase
 nnoremap <leader>u <S-v>u
-
-set background=dark
-set t_Co=256
 
 if (empty($TMUX))
   if (has("nvim"))
@@ -204,7 +153,6 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 let g:coc_global_extensions = [
   \ 'coc-tsserver',
-  \ 'coc-eslint',
   \ 'coc-json',
   \ 'coc-html',
   \ 'coc-css',
@@ -261,7 +209,7 @@ treesitter.setup({
     'tsx',
     'json',
     'html',
-    'scss'
+    'css'
   }
 })
 
@@ -286,22 +234,3 @@ EOF
 
 nnoremap <leader>fh :DiffviewFileHistory<CR>
 nnoremap <leader>fc :DiffviewClose<CR>
-
-lua << EOF
--- vim.opt.termguicolors = true
--- vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
--- vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
-
--- require("indent_blankline").setup {
---     char = "",
---     char_highlight_list = {
---         "IndentBlanklineIndent1",
---         "IndentBlanklineIndent2",
---     },
---     space_char_highlight_list = {
---         "IndentBlanklineIndent1",
---         "IndentBlanklineIndent2",
---     },
---     show_trailing_blankline_indent = false,
--- }
--- EOF
