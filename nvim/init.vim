@@ -5,6 +5,10 @@ set mouse=a
 set clipboard+=unnamedplus
 set updatetime=300
 
+set completeopt=menu,menuone,noselect
+
+" set cursorline
+
 set autoindent
 set smartindent
 set shiftwidth=2
@@ -15,7 +19,7 @@ set expandtab
 set nocompatible
 
 set number
-set rnu
+" set rnu
 set nowrap
 
 set nohlsearch
@@ -25,8 +29,6 @@ set showmatch
 set nobackup
 set nowritebackup
 set noswapfile
-
-set completeopt=menu,menuone,noselect
 
 set background=dark
 set t_Co=256
@@ -48,7 +50,7 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'andrewradev/tagalong.vim'
@@ -63,7 +65,6 @@ Plug 'sindrets/diffview.nvim'
 " Plug 'editorconfig/editorconfig-vim'
 
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'numToStr/Comment.nvim'
 Plug 'max397574/better-escape.nvim'
 
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
@@ -76,29 +77,61 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'pantharshit00/vim-prisma'
 
 " Themes
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-Plug 'olimorris/onedarkpro.nvim'
+" Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+" Plug 'olimorris/onedarkpro.nvim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
-Plug 'karb94/neoscroll.nvim'
+" Plug 'karb94/neoscroll.nvim'
 
 " Plug 'lukas-reineke/indent-blankline.nvim'
-" Plug 'akinsho/toggleterm.nvim'
 " Plug 'yardnsm/vim-import-cost', { 'do': 'npm install --production' }
+
+" Plug 'numToStr/Comment.nvim'
+Plug 'terrortylor/nvim-comment'
+
+" Plug 'akinsho/toggleterm.nvim', {'tag' : 'v1.*'}
+
+" newest
+" Plug "williamboman/nvim-lsp-installer"
+
+Plug 'neovim/nvim-lspconfig'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
+Plug 'folke/trouble.nvim'
+Plug 'onsails/lspkind.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'williamboman/nvim-lsp-installer'
 
 call plug#end()
 
+lua require("nvim-lsp-installer").setup {}
+
 lua << EOF
 
-require('gitsigns').setup()
-require('neoscroll').setup()
+-- require("nvim-lsp-installer").setup {}
 
-require('nvim-autopairs').setup()
+EOF
+
+lua require('greg')
+
+lua << EOF
+require('nvim_comment').setup()
 require('nvim-ts-autotag').setup()
-
-require('Comment').setup()
+require('nvim-autopairs').setup()
 require('better_escape').setup()
 
+-- require('Comment').setup()
+-- require('neoscroll').setup()
 EOF
 
 let g:tokyonight_style = "night"
@@ -107,7 +140,6 @@ let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
 
 colorscheme tokyonight
 
-" Vim Script
 " let g:catppuccin_flavour = "macchiato" " latte, frappe, macchiato, mocha
 " colorscheme catppuccin
 
@@ -115,12 +147,6 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
 
 imap <expr><tab> emmet#expandAbbrIntelligent("\<tab>")
-
-" Telescope shorcuts
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<cr>
 " nnoremap <leader>gs <cmd>lua require('telescope.builtin').git_status()<cr>
@@ -133,11 +159,11 @@ nmap sv :vsplit<Return><C-w>w
 " Select all
 nmap <C-a> gg<S-v>G
 
-nnoremap <leader>gg :Neogit<cr> 
-nnoremap <leader>gc :Neogit commit<cr> 
+" nnoremap <leader>gg :Neogit<cr> 
+" nnoremap <leader>gc :Neogit commit<cr> 
 
 " Converts the line to lowercase
-nnoremap <leader>u <S-v>u
+nnoremap <leader>u <S-v>ugv
 
 if (empty($TMUX))
   if (has("nvim"))
@@ -149,25 +175,28 @@ if (empty($TMUX))
   endif
 endif
 
-inoremap <silent><expr> <c-space> coc#refresh()
+" Telescope shorcuts
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-let g:coc_global_extensions = [
-  \ 'coc-tsserver',
-  \ 'coc-json',
-  \ 'coc-html',
-  \ 'coc-css',
-  \ 'coc-emmet',
-  \ 'coc-eslint',
-  \ ]
+" inoremap <silent><expr> <c-space> coc#refresh()
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <F2> <Plug>(coc-rename)
+" let g:coc_global_extensions = [
+"   \ 'coc-tsserver',
+"   \ 'coc-json',
+"   \ 'coc-html',
+"   \ 'coc-css',
+"   \ 'coc-emmet',
+"   \ 'coc-eslint',
+"   \ ]
 
-nmap <leader>j :bprevious<CR>
-nmap <leader>k :bnext<CR>
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+" nmap <F2> <Plug>(coc-rename)
 
 nnoremap <leader><tab> :NvimTreeToggle<CR>
 nnoremap <leader>n :NvimTreeFocus<CR>
@@ -175,62 +204,22 @@ nnoremap <leader>r :NvimTreeRefresh<CR>
 
 nnoremap <leader>ee :vsplit $MYVIMRC<CR>
 
-lua << EOF
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
-local lualine = require('lualine')
-local telescope = require('telescope')
-local treesitter = require('nvim-treesitter.configs')
-local nvimtree = require('nvim-tree')
+nnoremap + <C-a>
+nnoremap - <C-x>
 
-lualine.setup({
-  options = {
-    theme = 'tokyonight'
-  }
-}) 
+xnoremap p "_dp
 
-telescope.setup({ 
-  extensions = {
-    fuzzy = true,
-    override_generic_sorter = true,
-    override_file_sorter = true,
-    case_mode = "smart_case"
-  },
-  defaults = { 
-    file_ignore_patterns = {'node_modules'},
-    preview = false
-  } 
-})
+nnoremap Y yg$
 
-treesitter.setup({
-  highlight = {
-		enable = true
-	},
-  ensure_installed = {
-    'tsx',
-    'json',
-    'html',
-    'css'
-  }
-})
+" copy without yank
+nnoremap <leader>d "_d
+nnoremap x "_x
 
-nvimtree.setup()
+nnoremap <Tab> :bnext<cr>
+nnoremap <S-Tab> :bprevious<cr>
 
-local neogit = require('neogit')
-
-neogit.setup({
-  integrations = {
-    -- use { 
-    --   'TimUntersberger/neogit', 
-    --   requires = { 
-    --     'nvim-lua/plenary.nvim',
-    --     'sindrets/diffview.nvim' 
-    --   }
-    -- }
-    diffview = true
-  }
-})
-
-EOF
-
-nnoremap <leader>fh :DiffviewFileHistory<CR>
-nnoremap <leader>fc :DiffviewClose<CR>
+" vnoremap > >gv
+" vnoremap < <gv

@@ -1,8 +1,9 @@
 {
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "i",
+  "diagnostic.hintSign": "",
   "suggest.noselect": false,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "prisma"
-  ],
   "eslint.autoFixOnSave": true,
   "typescript.referencesCodeLens.enable": false,
   "javascript.referencesCodeLens.enable": false,

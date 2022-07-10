@@ -1,0 +1,11 @@
+require("greg.neogit")
+require("greg.git_signs")
+require("greg.nvim_tree")
+require("greg.treesitter")
+require("greg.lualine")
+
+require("greg.cmp_nvim_lsp")
+require("greg.nvim_lsp")
+-- require("greg.lspsaga")
+-- require("greg.trouble")
+-- require("greg.null_ls")
